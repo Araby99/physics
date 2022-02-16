@@ -10,6 +10,10 @@
   font-family: Regular;
   box-sizing: border-box;
 }
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
 .App > .container {
   padding: 70px 0;
 }
@@ -24,4 +28,13 @@
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
+}
+@media (max-width: 768px) {
+  .container {
+    width: 90%!important;
+  }
+  #img {
+    width: 100%;
+    margin-top: 20px;
+  }
 }
