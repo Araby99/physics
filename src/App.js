@@ -26,13 +26,13 @@ class App extends React.Component {
       } else {
         this.setState({ img: `./assets/${document.querySelector("#lect").value}/${document.querySelector("#number").value}.png` })
       }
-      setTimeout(() => {
+      document.querySelector("#img").addEventListener("load", () => {
         if (document.body.clientHeight > window.innerHeight) {
           document.querySelector("footer").style.position = "relative"
         } else {
           document.querySelector("footer").style.position = "absolute"
         }
-      }, 100);
+      })
     })
   }
 
