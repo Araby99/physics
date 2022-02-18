@@ -13,8 +13,13 @@ footer p {
     font-family: Bold;
     letter-spacing: 1px;
 }
-footer .social-media > * {
+footer .social-media {
     font-size: 1.5rem;
-    margin-left: 2rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+footer .social-media > * {
     color: #fff;
 }

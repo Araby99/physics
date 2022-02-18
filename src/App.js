@@ -15,6 +15,22 @@ class App extends React.Component {
     document.querySelector("#lect").addEventListener("change", () => {
       if (document.querySelector("#lect").value === "unit") {
         this.setState({ maxNumber: 33 })
+      } else if (document.querySelector("#lect").value === "heat") {
+        this.setState({ maxNumber: 83 })
+      } else if (document.querySelector("#lect").value === "thermo") {
+        this.setState({ maxNumber: 106 })
+      } else if (document.querySelector("#lect").value === "fluid") {
+        this.setState({ maxNumber: 66 })
+      } else if (document.querySelector("#lect").value === "rotational") {
+        this.setState({ maxNumber: 110 })
+      } else if (document.querySelector("#lect").value === "coulomb") {
+        this.setState({ maxNumber: 44 })
+      } else if (document.querySelector("#lect").value === "gauss") {
+        this.setState({ maxNumber: 71 })
+      } else if (document.querySelector("#lect").value === "electric") {
+        this.setState({ maxNumber: 71 })
+      } else if (document.querySelector("#lect").value === "capacitors") {
+        this.setState({ maxNumber: 59 })
       }
     })
     document.querySelector("#search").addEventListener("click", () => {
@@ -46,8 +62,12 @@ class App extends React.Component {
               <option value="unit">Unit & Dimensions</option>
               <option value="heat">Heat & Temperature</option>
               <option value="thermo">Thermodynamics</option>
-              <option value="rotational">Rotational Motion</option>
               <option value="fluid">Fluid</option>
+              <option value="rotational">Rotational Motion</option>
+              <option value="coulomb">Coulomb's Law & The Electric Field</option>
+              <option value="gauss">Conteneous Charge Distribution and Gauss Law</option>
+              <option value="electric">Electric Potential</option>
+              <option value="capacitors">Capacitors</option>
             </select>
             <input type="number" onKeyDown={(evt) => (evt.key === '.' || evt.key === '-') && evt.preventDefault()} className="form-control" id="number" placeholder="Problem Number" min={1} max={this.state.maxNumber} />
             <button type="button" className="btn btn-outline-primary" id="search">Search</button>
