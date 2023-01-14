@@ -1,83 +1,103 @@
+import React from 'react'
+import { useState } from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
 import Footer from './component/footer/Footer';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      img: null,
-      maxNumber: 1
-    };
+const Test = () => {
+  const [maxNum, setMaxNum] = useState(1);
+  const [img, setImg] = useState(null);
+  const [problemNum, setProblemNum] = useState(1);
+  const change = () => {
+    switch (document.querySelector("#lect").value) {
+      case "unit":
+        setMaxNum(33)
+        break;
+      case "heat":
+        setMaxNum(83)
+        break;
+      case "thermo":
+        setMaxNum(106)
+        break;
+      case "fluid":
+        setMaxNum(66)
+        break;
+      case "rotational":
+        setMaxNum(110)
+        break;
+      case "coulomb":
+        setMaxNum(44)
+        break;
+      case "gauss":
+        setMaxNum(71)
+        break;
+      case "electric":
+        setMaxNum(71)
+        break;
+      case "capacitors":
+        setMaxNum(59)
+        break;
+      default:
+        break;
+    }
   }
-  componentDidMount() {
-    document.querySelector("#lect").addEventListener("change", () => {
-      if (document.querySelector("#lect").value === "unit") {
-        this.setState({ maxNumber: 33 })
-      } else if (document.querySelector("#lect").value === "heat") {
-        this.setState({ maxNumber: 83 })
-      } else if (document.querySelector("#lect").value === "thermo") {
-        this.setState({ maxNumber: 106 })
-      } else if (document.querySelector("#lect").value === "fluid") {
-        this.setState({ maxNumber: 66 })
-      } else if (document.querySelector("#lect").value === "rotational") {
-        this.setState({ maxNumber: 110 })
-      } else if (document.querySelector("#lect").value === "coulomb") {
-        this.setState({ maxNumber: 44 })
-      } else if (document.querySelector("#lect").value === "gauss") {
-        this.setState({ maxNumber: 71 })
-      } else if (document.querySelector("#lect").value === "electric") {
-        this.setState({ maxNumber: 71 })
-      } else if (document.querySelector("#lect").value === "capacitors") {
-        this.setState({ maxNumber: 59 })
-      }
-    })
-    document.querySelector("#search").addEventListener("click", () => {
-      if (document.querySelector("#lect").value === "Select Lecture") {
-        alert("Please Select a Lecture")
-      } else if (document.querySelector("#number").value > this.state.maxNumber || document.querySelector("#number").value < 1) {
-        alert(`Please Select a value between 1 and ${this.state.maxNumber}`)
-        document.querySelector("#number").value = this.state.maxNumber
+  const search = () => {
+    if (document.querySelector("#lect").value === "Select Lecture") {
+      alert("Please Select a Lecture")
+    } else if (Number(problemNum) > maxNum || Number(problemNum) < 1) {
+      alert(`Please Select a value between 1 and ${maxNum}`)
+      setProblemNum(maxNum)
+    } else {
+      setImg(`./assets/${document.querySelector("#lect").value}/${Number(problemNum)}.png`)
+    }
+    document.querySelector("#img").addEventListener("load", () => {
+      if (document.body.clientHeight > window.innerHeight) {
+        document.querySelector("footer").style.position = "relative"
       } else {
-        this.setState({ img: `./assets/${document.querySelector("#lect").value}/${document.querySelector("#number").value}.png` })
+        document.querySelector("footer").style.position = "absolute"
       }
-      document.querySelector("#img").addEventListener("load", () => {
-        if (document.body.clientHeight > window.innerHeight) {
-          document.querySelector("footer").style.position = "relative"
-        } else {
-          document.querySelector("footer").style.position = "absolute"
-        }
-      })
     })
   }
-
-  render() {
-    return (
-      <div className="App">
-        <div className="container" id="pApp">
-          <div className="pyhsics">
-            <select name="lect" id="lect" className="form-select">
-              <option defaultValue>Select Lecture</option>
-              <option value="unit">Unit & Dimensions</option>
-              <option value="heat">Heat & Temperature</option>
-              <option value="thermo">Thermodynamics</option>
-              <option value="fluid">Fluid</option>
-              <option value="rotational">Rotational Motion</option>
-              <option value="coulomb">Coulomb's Law & The Electric Field</option>
-              <option value="gauss">Conteneous Charge Distribution and Gauss Law</option>
-              <option value="electric">Electric Potential</option>
-              <option value="capacitors">Capacitors</option>
-            </select>
-            <input type="number" onKeyDown={(evt) => (evt.key === '.' || evt.key === '-') && evt.preventDefault()} className="form-control" id="number" placeholder="Problem Number" min={1} max={this.state.maxNumber} />
-            <button type="button" className="btn btn-outline-primary" id="search">Search</button>
-          </div>
-          <img src={this.state.img ? this.state.img : "./assets/error.png"} id="img" alt="Pyhsics Problem" className="pImg" />
-        </div>
-        <Footer></Footer>
-      </div>
-    );
+  const submit = e => {
+    e.preventDefault();
+    search();
   }
+  const next = () => {
+    setProblemNum(Number(problemNum) + 1)
+    search();
+  }
+  const prev = () => {
+    setProblemNum(Number(problemNum) - 1)
+    search();
+  }
+  return (
+    <div className="App">
+      <div className="container">
+        <form className="pyhsics" onSubmit={submit}>
+          <select name="lect" id="lect" className="form-select" onChange={change}>
+            <option defaultValue>Select Lecture</option>
+            <option value="unit">Unit & Dimensions</option>
+            <option value="heat">Heat & Temperature</option>
+            <option value="thermo">Thermodynamics</option>
+            <option value="fluid">Fluid</option>
+            <option value="rotational">Rotational Motion</option>
+            <option value="coulomb">Coulomb's Law & The Electric Field</option>
+            <option value="gauss">Conteneous Charge Distribution and Gauss Law</option>
+            <option value="electric">Electric Potential</option>
+            <option value="capacitors">Capacitors</option>
+          </select>
+          <input type="number" onKeyDown={(evt) => (evt.key === '.' || evt.key === '-') && evt.preventDefault()} className="form-control" id="number" placeholder="Problem Number" min={1} max={maxNum} value={problemNum} onChange={e => setProblemNum(e.target.value)} />
+          <input type="submit" className="btn btn-outline-primary" onClick={search} value="Search" />
+        </form>
+        <div className="pb-5 d-flex justify-content-center align-items-center gap-5">
+          <button className="btn btn-primary" onClick={next}>Next</button>
+          <button className="btn btn-primary" onClick={prev}>Previous</button>
+        </div>
+        <img src={img ? img : "./assets/error.png"} id="img" alt="Pyhsics Problem" className="pImg" />
+      </div>
+      <Footer />
+    </div>
+  )
 }
 
-export default App;
+export default Test
